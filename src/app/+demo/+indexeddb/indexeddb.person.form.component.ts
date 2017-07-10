@@ -14,35 +14,35 @@ import { Person } from './indexeddb.person.entity';
     <form>
       <p>
         <span>编码</span>
-        <input name="code" type="text"/>
+        <input name="code" [(ngModel)]="person.code" type="text"/>
       </p>
       <p>
         <span>姓名</span>
-        <input name="name" type="text"/>
+        <input name="name" [(ngModel)]="person.name" type="text"/>
       </p>
       <p>
         <span>体重</span>
-        <input name="weight" type="number"/>
+        <input name="weight" [(ngModel)]="person.weight" type="number"/>
       </p>
       <p>
         <span>生日</span>
-        <input name="brithday" type="date"/>
+        <input name="brithday" [(ngModel)]="person.brithday" type="date"/>
       </p>
       <p>
         <span>简历</span>
-        <input name="resume" type="file"/>
+        <input name="resume" [(ngModel)]="person.resume" type="file"/>
       </p>
       <p>
         <span>照片</span>
-        <input name="photo" type="file" accept="image/*" capture="camera"/>
+        <input name="photo" [(ngModel)]="person.photo" type="file" accept="image/*" capture="camera"/>
       </p>
       <p>
         <span>视频</span>
-        <input name="audio" type="file" accept="video/*" capture="camcorder"/>
+        <input name="audio" [(ngModel)]="person.audio" type="file" accept="video/*" capture="camcorder"/>
       </p>
       <p>
         <span>录音</span>
-        <input name="audio" type="file" accept="audio/*" capture="microphone"/>
+        <input name="audio" [(ngModel)]="person.audio" type="file" accept="audio/*" capture="microphone"/>
       </p>
       <p>
         <button type="submit" (click)="onSaveButtonClick()">保存</button>
@@ -51,8 +51,10 @@ import { Person } from './indexeddb.person.entity';
   `
 })
 export class PersonFormComponent implements OnInit {
+
+  public person: Person = new Person();
   @Input('person')
-  public person: Person;
+  public editPerson:Person;
   @Output('onsave')
   public onsave = new EventEmitter<Person>();
   public ngOnInit() {

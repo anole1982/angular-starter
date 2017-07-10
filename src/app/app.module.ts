@@ -28,7 +28,7 @@ import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
-
+import { CoreModule } from './core/core.module';
 import '../styles/styles.scss';
 import '../styles/headings.css';
 
@@ -63,6 +63,7 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
+    CoreModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   /**

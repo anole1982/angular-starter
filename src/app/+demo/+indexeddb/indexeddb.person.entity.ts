@@ -1,8 +1,11 @@
+// import { JsonMember, JsonObject } from 'typedjson-npm';
+//
+// @JsonObject()
 export class Person {
   /**
    * ID
    */
-  private _id: string;
+  private _id: number;
   /**
    * 编号
    */
@@ -37,11 +40,12 @@ export class Person {
    */
   private _audio: Blob;
 
-  get id(): string {
+  get id(): number {
     return this._id;
   }
 
-  set id(value: string) {
+  // @JsonMember()
+  set id(value: number) {
     this._id = value;
   }
 
@@ -49,6 +53,7 @@ export class Person {
     return this._code;
   }
 
+  // @JsonMember()
   set code(value: string) {
     this._code = value;
   }
@@ -57,6 +62,7 @@ export class Person {
     return this._name;
   }
 
+  // @JsonMember()
   set name(value: string) {
     this._name = value;
   }
@@ -65,6 +71,7 @@ export class Person {
     return this._photo;
   }
 
+  // @JsonMember()
   set photo(value: Blob) {
     this._photo = value;
   }
@@ -73,6 +80,7 @@ export class Person {
     return this._weight;
   }
 
+  // @JsonMember
   set weight(value: number) {
     this._weight = value;
   }
@@ -81,6 +89,7 @@ export class Person {
     return this._brithday;
   }
 
+  // @JsonMember()
   set brithday(value: Date) {
     this._brithday = value;
   }
@@ -89,6 +98,7 @@ export class Person {
     return this._resume;
   }
 
+  // @JsonMember()
   set resume(value: Blob) {
     this._resume = value;
   }
@@ -97,6 +107,7 @@ export class Person {
     return this._video;
   }
 
+  // @JsonMember()
   set video(value: Blob) {
     this._video = value;
   }
@@ -105,6 +116,7 @@ export class Person {
     return this._audio;
   }
 
+  // @JsonMember()
   set audio(value: Blob) {
     this._audio = value;
   }
