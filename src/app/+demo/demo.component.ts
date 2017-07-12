@@ -25,13 +25,16 @@ console.log('`Detail` component loaded asynchronously');
         webrtc
       </a>
     </span>
-
     <span>
       <a [routerLink]=" ['./location'] ">
         geolocation
       </a>
     </span>
-    
+    <span>
+      <a [routerLink]=" ['./crypto'] ">
+        crypto
+      </a>
+    </span>
     <router-outlet></router-outlet>
   `,
 })

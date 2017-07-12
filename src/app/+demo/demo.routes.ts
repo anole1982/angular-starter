@@ -5,6 +5,7 @@ export const routes = [
     { path: '', component: DemoComponent },
     { path: 'indexeddb', loadChildren: './+indexeddb#IndexedDBModule' },
     { path: 'location', loadChildren: './+location#LocationModule' },
-    { path: 'webrtc', loadChildren: './+webrtc#WebrtcModule' }
+    { path: 'webrtc', loadChildren: './+webrtc#WebrtcModule' },
+    { path: 'crypto', loadChildren: './+crypto#CryptoModule' }
   ]}
 ];

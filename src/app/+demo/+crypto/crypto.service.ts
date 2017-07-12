@@ -1,0 +1,582 @@
+import { Injectable } from '@angular/core';
+/**
+ * https://www.w3.org/TR/WebCryptoAPI/
+ *
+ *Algorithm name	encrypt	decrypt	sign	verify	digest	generateKey	deriveKey	deriveBits	importKey	exportKey	wrapKey	unwrapKey
+ *RSASSA-PKCS1-v1_5	({ kty: "RSA",  alg: "RS1" },{ name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-1" } })		✔	✔		✔			✔	✔
+ *RSA-PSS			✔	✔		✔			✔	✔
+ *RSA-OAEP	✔	✔				✔			✔	✔	✔	✔
+ *ECDSA			✔	✔		✔			✔	✔
+ *ECDH						✔	✔	✔	✔	✔
+ *AES-CTR	✔	✔				✔			✔	✔	✔	✔
+ *AES-CBC	✔	✔				✔			✔	✔	✔	✔
+ *AES-GCM	✔	✔				✔			✔	✔	✔	✔
+ *AES-KW						✔			✔	✔	✔	✔
+ *HMAC			✔	✔		✔			✔	✔
+ *SHA-1					✔
+ *SHA-256					✔
+ *SHA-384					✔
+ *SHA-512					✔
+ *HKDF							✔	✔	✔
+ *PBKDF2							✔	✔	✔
+ *"encrypt", "decrypt", "sign", "verify", "deriveKey", "deriveBits", "wrapKey" and "unwrapKey".
+ * { kty: "RSA",  alg: "RS1" }
+ { name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-1" }}
+
+ { kty: "RSA",  alg: "RS256" }
+ { name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-256" }}
+
+ { kty: "RSA",  alg: "RS384" }
+ { name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-384" }}
+
+ { kty: "RSA",  alg: "RS512" }
+ { name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-512" }}
+
+ { kty: "RSA",  alg: "PS256" }
+ { name: "RSA-PSS",  hash: { name: "SHA-256" }}
+
+ { kty: "RSA",  alg: "PS384" }
+ { name: "RSA-PSS",  hash: { name: "SHA-384" }}
+
+ { kty: "RSA",  alg: "PS512" }
+ { name: "RSA-PSS",  hash: { name: "SHA-512" }}
+
+ { kty: "RSA",  alg: "RSA-OAEP" }
+ { name: "RSA-OAEP",  hash: { name: "SHA-1" }}
+
+ { kty: "RSA",  alg: "RSA-OAEP-256" }
+ { name: "RSA-OAEP",  hash: { name: "SHA-256" }}
+
+ { kty: "RSA",  alg: "RSA-OAEP-384" }
+ { name: "RSA-OAEP",  hash: { name: "SHA-384" }}
+
+ { kty: "RSA",  alg: "RSA-OAEP-512" }
+ { name: "RSA-OAEP",  hash: { name: "SHA-512" }}
+
+ { kty: "EC",  alg: "ES256" }
+ { name: "ECDSA",  namedCurve: "P-256"  hash: { name: "SHA-256" }}
+
+ { kty: "EC",  alg: "ES384" }
+ { name: "ECDSA",  namedCurve: "P-384"  hash: { name: "SHA-384" }}
+
+ { kty: "EC",  alg: "ES512" }
+
+ { name: "ECDSA",  namedCurve: "P-521"  hash: { name: "SHA-512" }}
+
+ { kty: "oct",  alg: "A128CTR" }
+ { name: "AES-CTR",  length: 128 }
+
+ { kty: "oct",  alg: "A192CTR" }
+ { name: "AES-CTR",  length: 192 }
+
+
+ { kty: "oct",  alg: "A256CTR" }
+ { name: "AES-CTR",  length: 256 }
+
+ { kty: "oct",  alg: "A128CBC" }
+ { name: "AES-CBC",  length: 128 }
+
+ { kty: "oct",  alg: "A192CBC" }
+ { name: "AES-CBC",  length: 192 }
+
+ { kty: "oct",  alg: "A256CBC" }
+ { name: "AES-CBC",  length: 256 }
+
+ { kty: "oct",  alg: "A128KW" }
+
+ { name: "AES-KW",  length: 128 }
+
+ { kty: "oct",  alg: "A192KW" }
+ { name: "AES-KW",  length: 192 }
+
+ { kty: "oct",  alg: "A256KW" }
+ { name: "AES-KW",  length: 256 }
+
+ { kty: "oct",  alg: "A128GCM" }
+ { name: "AES-GCM",  length: 128 }
+
+ { kty: "oct",  alg: "A192GCM" }
+ { name: "AES-GCM",  length: 192 }
+
+ { kty: "oct",  alg: "A256GCM" }
+ { name: "AES-GCM",  length: 256 }
+
+ { kty: "oct",  alg: "A128GCMKW" }
+ { name: "AES-GCM",  length: 128 }
+
+ { kty: "oct",  alg: "A192GCMKW" }
+ { name: "AES-GCM",  length: 192 }
+
+ { kty: "oct",  alg: "A256GCMKW" }
+ { name: "AES-GCM",  length: 256 }
+
+ { kty: "oct",  alg: "HS1" }
+ { name: "HMAC",  hash: { name: "SHA-1" }}
+
+ { kty: "oct",  alg: "HS256" }
+ { name: "HMAC",  hash: { name: "SHA-256" }}
+
+ { kty: "oct",  alg: "HS384" }
+ { name: "HMAC",  hash: { name: "SHA-384" }}
+
+ { kty: "oct",  alg: "HS512" }
+ { name: "HMAC",  hash: "SHA-512" }
+ AES加密模式和填充方式
+
+ 算法/模式/填充                16字节加密后数据长度        不满16字节加密后长度
+ AES/CBC/NoPadding             16                          不支持
+ AES/CBC/PKCS5Padding          32                          16
+ AES/CBC/PKCS7Padding  (bcprov-jdk16 支持)        32                          16
+ AES/CBC/ISO10126Padding       32                          16
+ AES/CFB/NoPadding             16                          原始数据长度
+ AES/CFB/PKCS5Padding          32                          16
+ AES/CFB/ISO10126Padding       32                          16
+ AES/ECB/NoPadding             16                          不支持
+ AES/ECB/PKCS5Padding          32                          16
+ AES/ECB/ISO10126Padding       32                          16
+ AES/OFB/NoPadding             16                          原始数据长度
+ AES/OFB/PKCS5Padding          32                          16
+ AES/OFB/ISO10126Padding       32                          16
+ AES/PCBC/NoPadding            16                          不支持
+ AES/PCBC/PKCS5Padding         32                          16
+ AES/PCBC/ISO10126Padding      32                          16
+ */
+@Injectable()
+export class CryptoService {
+  private crypto = window.crypto;
+
+  public genRandomNumbers(array){
+    return this.crypto.getRandomValues(array);
+  }
+
+  /**
+   * Parameters
+
+   algorithm is an object specifying the encryption function to be used and its parameters;  if there are no parameters, algorithm can be a DOMString with the algorithm name. Supported values¹ are:
+   {"name": "AES-CBC", iv} where iv is a 16-byte BufferSource initialization vector (generated by RandomSource.getRandomValues()).
+   {"name": "AES-CTR", counter, length} where counter is an initialised 16-byte BufferSource counter block, and length is the length (in bits) of the part of the counter block that is incremented.
+   {"name": "AES-GCM", iv[, additionalData, tagLength]} where iv is a BufferSource initialization vector up to 2⁶⁴−1 bytes long; additionalData is a BufferSource authentication data and tagLength is the length of the authentication tag.
+   {"name": "RSA-OAEP"[, label]} where label is an optional label to associate with the message.
+   key is a CryptoKey containing the key to be used for signing.
+   data is a BufferSource containing the data to be encrypted, the plaintext.
+   Return value
+
+   result is a Promise that returns the ciphertext generated by the encryption of the plaintext as an ArrayBuffer.
+   Exceptions
+
+   The promise is rejected when the following exceptions are encountered:
+
+   InvalidAccessError
+   when the requested operation is not valid for the provided key (e.g. invalid encryption algorithm, or invalid key for specified encryption algorithm).
+   OperationError
+   when the operation failed for an operation-specific reason (e.g. algorithm parameters of invalid sizes, or AES-GCM plaintext longer than 2³⁹−256 bytes).
+   Example
+   const ptUtf8 = new TextEncoder().encode('my plaintext');
+
+   const pwUtf8 = new TextEncoder().encode('my password');
+   const pwHash = await crypto.subtle.digest('SHA-256', pwUtf8);
+
+   const iv = crypto.getRandomValues(new Uint8Array(12));
+   const alg = { name: 'AES-GCM', iv: iv };
+   const key = await crypto.subtle.importKey('raw', pwHash, alg, false, ['encrypt']);
+
+   const ctBuffer = await crypto.subtle.encrypt(alg, key, ptUtf8);
+   The password and the iv will be required for the SubtleCrypto.decrypt() operation.
+
+   * @param algorithm
+   * @param key
+   * @param data
+   * @returns {PromiseLike<ArrayBuffer>}
+   */
+  public encrypt(algorithm, key, data){
+    return this.crypto.subtle.encrypt(algorithm, key, data);
+  }
+
+  /**
+   * Parameters
+
+   algorithm is an object specifying the encryption function to be used and its parameters; if there are no parameters, algorithm can be a DOMString with the algorithm name. Supported values¹ are:
+   {"name": "AES-CBC", iv} where iv is as supplied to SubtleCrypto.encrypt().
+   {"name": "AES-CTR", counter, length} where counter and length are as supplied to SubtleCrypto.encrypt().
+   {"name": "AES-GCM", iv[, additionalData, tagLength]} where iv, additionalData, tagLength are as supplied to SubtleCrypto.encrypt().
+   {"name": "RSA-OAEP"[, label]} where label is as supplied to SubtleCrypto.encrypt().
+   key is a CryptoKey containing the key to be used for decryption.
+   data is a BufferSource containing the data to be decrypted, the ciphertext.
+   Return value
+
+   result is a Promise that returns the plaintext generated by the decryption of the ciphertext.
+   Exceptions
+
+   The promise is rejected when the following exceptions are encountered:
+
+   InvalidAccessError
+   when the requested operation is not valid for the provided key (e.g. invalid encryption algorithm, or invalid key for specified encryption algorithm).
+   OperationError
+   when the operation failed for an operation-specific reason (e.g. algorithm parameters of invalid sizes, or the result of the decryption is a fail).
+   Example
+   const pwUtf8 = new TextEncoder().encode('my password');
+   const pwHash = await crypto.subtle.digest('SHA-256', pwUtf8);
+
+   const alg = { name: 'AES-GCM', iv: iv };
+   const key = await crypto.subtle.importKey('raw', pwHash, alg, false, ['decrypt']);
+
+   const ptBuffer = await crypto.subtle.decrypt(alg, key, ctBuffer);
+
+   const plaintext = new TextDecoder().decode(ptBuffer);
+   The iv is as supplied to SubtleCrypto.encrypt(); the ctBuffer is the ciphertext returned from SubtleCrypto.encrypt().
+
+
+   */
+  public decrypt(algorithm, key, data){
+      return this.crypto.subtle.decrypt(algorithm, key, data);
+  }
+
+  /**
+   * SyntaxEDIT
+   var hash = crypto.subtle.digest(algo, buffer);
+   Parameters
+
+   algo is a DOMString defining the hash function to use. Supported values are: SHA-1, SHA-256, SHA-384, and SHA-512.
+   buffer is an ArrayBuffer or an ArrayBufferView containing the data to be hashed using the hashing algorithm.
+   Return value
+
+   hash is a Promise that returns the hash on success.
+   ExampleEDIT
+   Here's an example that computes the sha256 of a string and display its hex digest.
+
+   function sha256(str) {
+  // We transform the string into an arraybuffer.
+  var buffer = new TextEncoder("utf-8").encode(str);
+  return crypto.subtle.digest("SHA-256", buffer).then(function (hash) {
+    return hex(hash);
+  });
+}
+
+   function hex(buffer) {
+  var hexCodes = [];
+  var view = new DataView(buffer);
+  for (var i = 0; i < view.byteLength; i += 4) {
+    // Using getUint32 reduces the number of iterations needed (we process 4 bytes each time)
+    var value = view.getUint32(i)
+    // toString(16) will give the hex representation of the number without padding
+    var stringValue = value.toString(16)
+    // We use concatenation and slice for padding
+    var padding = '00000000'
+    var paddedValue = (padding + stringValue).slice(-padding.length)
+    hexCodes.push(paddedValue);
+  }
+
+  // Join all the hex strings into one
+  return hexCodes.join("");
+}
+
+   sha256("foobar").then(function(digest) {
+  console.log(digest);
+}); // outputs "c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2"
+   * @returns {PromiseLike<ArrayBuffer>}
+   */
+
+  public digest(algo, buffer){
+      return this.crypto.subtle.digest(algo, buffer);
+  }
+
+  /**
+   * SyntaxEDIT
+   var result = crypto.deriveKey(algo, masterKey, derivedKeyAlgo, extractable, keyUsages);
+   Parameters
+
+   algo is an object defining the derivation algorithm to use. Supported values are:
+   {"name": "ECDH", "public": publicKey}
+   {"name": "DH", "public": publicKey}
+   {"name": "PBKDF2", salt, iterations, hash} where salt is an ArrayBuffer or an ArrayBufferView, iterations is the number of iterations and hash is a DOMString identifying the hashing algorithm to use.
+   {"name": "HKDF-CTR", hash, label, context}
+   masterKey is a CryptoKey representing the master key to be used by the key derivation algorithm.
+   derivedKeyAlgo is an object defining the algorithm the derived key will be used for or a DOMString as a shortcut for {"name": derivedKeyAlgo}. For AES a length property is also required, possible values are 128, 192 or 256 bits.
+   extractable is a Boolean indicating if the key can be extracted from the CryptoKey object at a later stage.
+   keyUsages  is an Array indicating what can be done with the derivated key. Possible values of the array are:
+   "encrypt", allowing the key to be used for encrypting messages.
+   "decrypt", allowing the key to be used for decrypting messages.
+   "sign", allowing the key to be used for signing messages.
+   "verify", allowing the key to be used for verifying the signature of messages.
+   "deriveKey", allowing the key to be used as a base key when deriving a new key.
+   "deriveBits", allowing the key to be used as a base key when deriving bits of data for use in cryptographic primitives.
+   "wrapKey", allowing the key to wrap a symmetric key for usage (transfer, storage) in unsecure environments.
+   "unwrapKey", allowing the key to unwrap a symmetric key for usage (transfer, storage) in unsecure environments.
+   Return value
+
+   result is a Promise that returns the derivated key as a CryptoKey or a CryptoKeyPair.
+   Exceptions
+
+   The promise is rejected when one of the following exceptions are encountered:
+
+   InvalidAccessError when the master key is not a key for the requested derivation algorithm or if the CryptoKey.usages value of that key doesn't contain "deriveKey".
+   NotSupported when trying to use an algorithm that is either unknown or isn't suitable for derivation, or if the algorithm requested for the derived key doesn't define a key length.
+   SyntaxError when keyUsages is empty but the unwrapped key is of type "secret" or "private".
+   ExampleEDIT
+   Here's an example showing how to use deriveKey() to create a Secure Remote Password (also known as Proof of Secret) from a user's password.
+
+   // salt should be Uint8Array or ArrayBuffer
+   var saltBuffer = Unibabel.hexToBuffer('e85c53e7f119d41fd7895cdc9d7bb9dd');
+
+   // don't use naïve approaches for converting text, otherwise international
+   // characters won't have the correct byte sequences. Use TextEncoder when
+   // available or otherwise use relevant polyfills
+   var passphraseKey = Unibabel.utf8ToBuffer("I hëart årt and £$¢!");
+
+   // You should firstly import your passphrase Uint8array into a CryptoKey
+   window.crypto.subtle.importKey(
+   'raw',
+   passphraseKey,
+   {name: 'PBKDF2'},
+   false,
+   ['deriveBits', 'deriveKey']
+   ).then(function(key) {
+
+  return window.crypto.subtle.deriveKey(
+    { "name": 'PBKDF2',
+      "salt": saltBuffer,
+      // don't get too ambitious, or at least remember
+      // that low-power phones will access your app
+      "iterations": 100,
+      "hash": 'SHA-256'
+    },
+    key,
+
+    // Note: for this demo we don't actually need a cipher suite,
+    // but the api requires that it must be specified.
+
+    // For AES the length required to be 128 or 256 bits (not bytes)
+    { "name": 'AES-CBC', "length": 256 },
+
+    // Whether or not the key is extractable (less secure) or not (more secure)
+    // when false, the key can only be passed as a web crypto object, not inspected
+    true,
+
+    // this web crypto object will only be allowed for these functions
+    [ "encrypt", "decrypt" ]
+  )
+}).then(function (webKey) {
+
+  return crypto.subtle.exportKey("raw", webKey);
+
+}).then(function (buffer) {
+
+    var proofOfSecret = Unibabel.bufferToHex(buffer);
+    // this proof-of-secret / secure-remote password
+    // can now be sent in place of the user's password
+});
+   * @param algo
+   * @param masterKey
+   * @param derivedKeyAlgo
+   * @param extractable
+   * @param keyUsages
+   */
+  public deriveKey(algo, masterKey, derivedKeyAlgo, extractable, keyUsages){
+      return this.crypto.subtle.deriveKey(algo, masterKey, derivedKeyAlgo, extractable, keyUsages);
+  }
+
+  /**
+   * Parameters
+
+   format is an enumerated value describing the data format in which the key has to be exported. It can be one of the following:
+   "raw", the key as an array of bytes, usually a secret key.
+   "pkcs8" a private key, in the IETF Public Key-Cryptographic Standard Encryption #8.
+   "spki", usually a public key, in the Simple public key infrastructure standard
+   "jwk", the key in the JSON Web Key format.
+   key is the CryptoKey to export.
+   Return value
+
+   result is a Promise that returns the key in the requested format.
+   Exceptions
+
+   The promise is rejected when one of the following exceptions is encountered:
+
+   InvalidAccessError when trying to export an non-extractable key.
+   NotSupported when trying to export in an unknown format.
+   TypeError when trying to use an invalid format.
+   * @param format
+   * @param key
+   */
+  public exportKey(format, key){
+      return this.crypto.subtle.exportKey(format, key);
+  }
+
+  /**
+   * Parameters
+
+   format is an enumerated value describing the data format of the key to imported. It can be one of the following:
+   "raw", the key as an array of bytes, usually a secret key.
+   "pkcs8" a private key, in the IETF Public Key-Cryptographic Standard Encryption #8.
+   "spki", usually a public key, in the Simple public key infrastructure standard
+   "jwk", the key in the JSON Web Key format.
+   keyData is an ArrayBuffer or a JSONWebKey containing the key in the given format.
+   algo is a DOMString defining the signature function to use. Supported values are: AES-CTR, AES-CBC, AES-GCM, RSA-OAEP, AES-KW, HMAC, RSASSA-PKCS1-v1_5, ECDSA, ECDH, DH.
+   extractable is a Boolean indicating if the key can be extracted from the CryptoKey object at a later stage.
+   usages is an Array indicating what can be done with the key. Possible values of the array are:
+   "encrypt", allowing the key to be used for encrypting messages.
+   "decrypt", allowing the key to be used for decrypting messages.
+   "sign", allowing the key to be used for signing messages.
+   "verify", allowing the key to be used for verifying the signature of messages.
+   "deriveKey", allowing the key to be used as a base key when deriving a new key.
+   "deriveBits", allowing the key to be used as a base key when deriving bits of data for use in cryptographic primitives.
+   "wrapKey", allowing the key to wrap a symmetric key for usage (transfer, storage) in unsecure environments.
+   "unwrapKey", allowing the key to unwrap a symmetric key for usage (transfer, storage) in unsecure environments.
+   Return value
+
+   result is a Promise that returns the generated CryptoKey.
+   Exceptions
+
+   The promise is rejected when one of the following exceptions is encountered:
+
+   SyntaxError when keyUsages is empty but the unwrapped key is of type "secret" or "private".
+   TypeError when trying to use an invalid format or if the keyData is not suited for that format.
+   */
+  public importKey(format, keyData, algo, extractable, usages){
+    return this.crypto.subtle.importKey(format, keyData, algo, extractable, usages);
+  }
+
+  /**
+   * Parameters
+
+   algo is a dictionary object defining the key generation function to use. Supported algo are: AES-CBC, AES-CTR, AES-GCM, RSA-OAEP, AES-KW, HMAC, RSASSA-PKCS1-v1_5, ECDSA, ECDH, and DH.
+   extractable is a Boolean indicating if the key can be extracted from the CryptoKey object at a later stage.
+   keyUsages  is an Array indicating what can be done with the newly generated key. Possible values of the array are:
+   "encrypt", allowing the key to be used for encrypting messages.
+   "decrypt", allowing the key to be used for decrypting messages.
+   "sign", allowing the key to be used for signing messages.
+   "verify", allowing the key to be used for verifying the signature of messages.
+   "deriveKey", allowing the key to be used as a base key when deriving a new key.
+   "deriveBits", allowing the key to be used as a base key when deriving bits of data for use in cryptographic primitives.
+   "wrapKey", allowing the key to wrap a symmetric key for usage (transfer, storage) in unsecure environments.
+   "unwrapKey", allowing the key to unwrap a symmetric key for usage (transfer, storage) in unsecure environments.
+   Return value
+
+   result is a Promise that returns the generated key as a CryptoKey or a CryptoKeyPair.
+   Exceptions
+
+   The promise is rejected when the following exception is encountered:
+
+   InvalidAccessError when the signing key is not a key for the request signing algorithm or when trying to use an algorithm that is either unknown or isn't suitable for signing.
+
+   * @param algo
+   * @param extractable
+   * @param keyUsages
+   * @returns {PromiseLike<CryptoKeyPair|CryptoKey>}
+   */
+  public generateKey(algo, extractable, keyUsages){
+    return this.crypto.subtle.generateKey(algo, extractable, keyUsages);
+  }
+
+  /**
+   * Parameters
+
+   algo is a DOMString defining the signature function to use. Supported values are: HMAC, RSASSA-PKCS1-v1_5, and ECDSA.
+   key is a CryptoKey containing the private key to be used for signing.
+   text2sign is a ArrayBuffer or an ArrayBufferView containing the data to be signed.
+   Return value
+
+   signature is a Promise that returns the signature on success.
+   Exceptions
+
+   The promise is rejected when the following exception is encountered:
+
+   InvalidAccessError when the signing key is not a key for the request signing algorithm or when trying to use an algorithm that is either unknown or isn't suitable for signing.
+   * @param algo
+   * @param key
+   * @param text2sign
+   */
+  public sign(algo, key, text2sign){
+    return this.crypto.subtle.sign(algo, key, text2sign);
+  }
+
+  /**
+   * Parameters
+
+   signature is a ArrayBuffer or an ArrayBufferView containing the signature to verify.
+   text2verify is a ArrayBuffer or an ArrayBufferView containing the data whose signature as to be verified.
+   key is a CryptoKey containing the key to be used to verify the signature. It is the secret key for a symmetric algorithm and the public key for an asymmetric algorithm.
+   algo is a DOMString defining the signature function to use. Supported values are: HMAC, RSASSA-PKCS1-v1_5, and ECDSA.
+   Return value
+
+   result is a Promise that returns a Boolean indicating if the signature has been a success on success.
+   Exceptions
+
+   The promise is rejected when the following exception is encountered:
+
+   InvalidAccessError when the encryption key is not a key for the requested verifying algorithm or when trying to use an algorithm that is either unknown or isn't suitable for a verify operation.
+   * @param algo
+   * @param key
+   * @param signature
+   * @param text2verify
+   */
+  public verify(algo, key, signature, text2verify){
+    return this.crypto.subtle.verify(algo, key, signature, text2verify);
+  }
+
+  /**
+   * Parameters
+
+   format is an enumerated value describing the data format of the key to unwrapped. It can be one of the following:
+   "raw", the key as an array of bytes, usually a secret key.
+   "pkcs8" a private key, in the IETF Public Key-Cryptographic Standard Encryption #8.
+   "spki", usually a public key, in the Simple public key infrastructure standard
+   "jwk", the key in the JSON Web Key format.
+   wrappedKey is a ArrayBuffer or a ... containing the wrapped key in the given format.
+   unwrappingKey is the CryptoKey to use to unwrap.
+   unwrapAlgo is the DOMString} representing the algorithm used to perform the unwrapping. It is one of the following: AES-CBC, AES-CTR, AES-GCM, RSA-OAEP, and AES-KW.
+   unwrappedKeyAlgo is the DOMString} representing the algorithm of the wrapped key.
+   extractable is a Boolean indicating if the key can be extracted from the CryptoKey object at a later stage.
+   keyUsages  is an Array indicating what can be done with the unwrapped key. Possible values of the array are:
+   "encrypt", allowing the key to be used for encrypting messages.
+   "decrypt", allowing the key to be used for decrypting messages.
+   "sign", allowing the key to be used for signing messages.
+   "verify", allowing the key to be used for verifying the signature of messages.
+   "deriveKey", allowing the key to be used as a base key when deriving a new key.
+   "deriveBits", allowing the key to be used as a base key when deriving bits of data for use in cryptographic primitives.
+   "wrapKey", allowing the key to wrap a symmetric key for usage (transfer, storage) in unsecure environments.
+   "unwrapKey", allowing the key to unwrap a symmetric key for usage (transfer, storage) in unsecure environments.
+   Return value
+
+   result is a Promise that returns the unwrapped key as a CryptoKey
+   Exceptions
+
+   The promise is rejected when one of the following exceptions is encountered:
+
+   InvalidAccessError when the unwrapping key is not a key for the requested unwrap algorithm or if the CryptoKey.usages value of that key doesn't contain "unwrap".
+   NotSupported when trying to use an algorithm that is either unknown or isn't suitable for encryption or wrapping.
+   SyntaxError when keyUsages is empty but the unwrapped key is of type "secret" or "private".
+   TypeError when trying to use an invalid format.
+   */
+  public unwrapKey(format, wrappedKey, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, extractable, keyUsages){
+      return this.crypto.subtle.unwrapKey(format, wrappedKey, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, extractable, keyUsages);
+  }
+
+  /**
+   * Parameters
+
+   format is an enumerated value describing the data format in which the key must be wrapped. It can be one of the following:
+   "raw", the key as an array of bytes, usually a secret key.
+   "pkcs8" a private key, in the IETF Public Key-Cryptographic Standard Encryption #8.
+   "spki", usually a public key, in the Simple public key infrastructure standard
+   "jwk", the key in the JSON Web Key format.
+   key is the CryptoKey to wrap.
+   wrappingkey is the CryptoKey used to perform the wrapping.
+   wrapAlgo is the DOMString} representing the algorithm used to perform the wrapping. It is one of the following: AES-CBC, AES-CTR, AES-GCM, RSA-OAEP, and AES-KW.
+   Return value
+
+   result is a Promise that returns the wrapped key in the requested format.
+   Exceptions
+
+   The promise is rejected when one of the following exceptions is encountered:
+
+   InvalidAccessError when the wrapping key is not a key for the requested wrap algorithm.
+   NotSupported when trying to use an algorithm that is either unknown or isn't suitable for encryption or wrapping.
+   TypeError when trying to use an invalid format.
+   */
+  public wrapKey(format, key, wrappingKey, wrapAlgo){
+    return this.crypto.subtle.wrapKey(format, key, wrappingKey, wrapAlgo);
+  }
+  public getRandomValues(arr){
+    return this.crypto.getRandomValues(arr);
+  }
+}
