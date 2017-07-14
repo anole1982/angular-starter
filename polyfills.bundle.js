@@ -1,4 +1,3 @@
-var ac_polyfills =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
