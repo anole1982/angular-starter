@@ -5,27 +5,27 @@ webpackJsonpac__name_([7],{
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__crypto_service__ = __webpack_require__(387);
 
 
 
 console.log('`Web rtc` component loaded asynchronously');
-let CryptoComponent = class CryptoComponent {
-    constructor(cryptoService) {
+var CryptoComponent = (function () {
+    function CryptoComponent(cryptoService) {
         this.cryptoService = cryptoService;
         this.source = '你好呀你好嘛你好吗你好哦';
         this.key = '12345678';
     }
-    ngOnInit() {
-    }
-    onDecryptClick() {
-        let buffer = this.hex2bytes(this.result);
+    CryptoComponent.prototype.ngOnInit = function () {
+    };
+    CryptoComponent.prototype.onDecryptClick = function () {
+        var buffer = this.hex2bytes(this.result);
         console.log(buffer);
-        let encryptedKey;
-        let alg;
-        let format;
+        var encryptedKey;
+        var alg;
+        var format;
         if (this.cryptoAlgorithm == 'AES-GCM') {
             encryptedKey = this.hex2bytes(this.key);
             console.log(encryptedKey.length);
@@ -53,76 +53,81 @@ let CryptoComponent = class CryptoComponent {
             alg = { name: "rsa-oaep", hash: { name: "sha-256" } };
             format = 'jwk';
         }
-    }
-    rasDecrypt(encryptedKey, data, alg, format) {
+    };
+    CryptoComponent.prototype.rasDecrypt = function (encryptedKey, data, alg, format) {
+        var _this = this;
         console.log('encryptedKey:' + encryptedKey);
-        this.cryptoService.importKey(format, encryptedKey, alg, true, ['encrypt']).then((key) => {
-            return this.cryptoService.encrypt(alg, key, data);
-        }).then((result) => {
-            this.result = this.hex(result);
+        this.cryptoService.importKey(format, encryptedKey, alg, true, ['encrypt']).then(function (key) {
+            return _this.cryptoService.encrypt(alg, key, data);
+        }).then(function (result) {
+            _this.result = _this.hex(result);
         });
-    }
-    aesDecrypt(encryptedKey, data, alg, format) {
+    };
+    CryptoComponent.prototype.aesDecrypt = function (encryptedKey, data, alg, format) {
+        var _this = this;
         console.log("encryptedKey::", encryptedKey);
-        this.cryptoService.digest('SHA-256', encryptedKey).then((keyData) => {
-            return this.cryptoService.importKey(format, encryptedKey, alg, true, ['decrypt']);
-        }).then((key) => {
+        this.cryptoService.digest('SHA-256', encryptedKey).then(function (keyData) {
+            return _this.cryptoService.importKey(format, encryptedKey, alg, true, ['decrypt']);
+        }).then(function (key) {
             console.log(key);
-            return this.cryptoService.decrypt(alg, key, data);
-        }).then((result) => {
-            this.decryptHex = this.hex(result);
-            this.decryptText = this.string(this.decryptHex);
+            return _this.cryptoService.decrypt(alg, key, data);
+        }).then(function (result) {
+            _this.decryptHex = _this.hex(result);
+            _this.decryptText = _this.string(_this.decryptHex);
         });
-    }
-    rasEncrypt(encryptedKey, data, alg, format) {
+    };
+    CryptoComponent.prototype.rasEncrypt = function (encryptedKey, data, alg, format) {
+        var _this = this;
         console.log('encryptedKey:' + encryptedKey);
-        this.cryptoService.importKey(format, encryptedKey, alg, true, ['encrypt']).then((key) => {
-            return this.cryptoService.encrypt(alg, key, data);
-        }).then((result) => {
-            this.result = this.hex(result);
+        this.cryptoService.importKey(format, encryptedKey, alg, true, ['encrypt']).then(function (key) {
+            return _this.cryptoService.encrypt(alg, key, data);
+        }).then(function (result) {
+            _this.result = _this.hex(result);
         });
-    }
-    aesEncrypt(encryptedKey, data, alg, format) {
-        this.cryptoService.digest('SHA-1', encryptedKey).then((keyData) => {
-            return this.cryptoService.importKey(format, encryptedKey, alg, true, ['encrypt']);
-        }).then((key) => {
+    };
+    CryptoComponent.prototype.aesEncrypt = function (encryptedKey, data, alg, format) {
+        var _this = this;
+        this.cryptoService.digest('SHA-1', encryptedKey).then(function (keyData) {
+            return _this.cryptoService.importKey(format, encryptedKey, alg, true, ['encrypt']);
+        }).then(function (key) {
             console.log(key);
             console.log(data);
-            return this.cryptoService.encrypt(alg, key, data);
-        }).then((result) => {
+            return _this.cryptoService.encrypt(alg, key, data);
+        }).then(function (result) {
             console.log(result);
-            this.result = this.hex(result);
+            _this.result = _this.hex(result);
         });
-    }
-    onCreateUserKeyClick() {
-        let algorithmKeyGen = {
+    };
+    CryptoComponent.prototype.onCreateUserKeyClick = function () {
+        var _this = this;
+        var algorithmKeyGen = {
             name: "RSA-OAEP",
             hash: { name: "sha-256" },
             modulusLength: 2048,
             publicExponent: new Uint8Array([0x01, 0x00, 0x01])
         };
-        let nonExtractable = false;
-        let publicKey = "";
-        let privateKey = "";
-        let keyPairs;
-        this.cryptoService.generateKey(algorithmKeyGen, true, ['encrypt', 'decrypt']).then((result) => {
+        var nonExtractable = false;
+        var publicKey = "";
+        var privateKey = "";
+        var keyPairs;
+        this.cryptoService.generateKey(algorithmKeyGen, true, ['encrypt', 'decrypt']).then(function (result) {
             keyPairs = result;
             return Promise.all([
-                this.cryptoService.exportKey("jwk", keyPairs.publicKey),
-                this.cryptoService.exportKey("jwk", keyPairs.privateKey)
+                _this.cryptoService.exportKey("jwk", keyPairs.publicKey),
+                _this.cryptoService.exportKey("jwk", keyPairs.privateKey)
             ]);
-        }).then((keyPairs) => {
+        }).then(function (keyPairs) {
             console.log(keyPairs);
-            this.publicKey = keyPairs[0];
-            this.privateKey = keyPairs[1];
+            _this.publicKey = keyPairs[0];
+            _this.privateKey = keyPairs[1];
         });
-    }
-    onCryptoAlgorithmChange() {
-        let buffer = this.bytes(this.source);
+    };
+    CryptoComponent.prototype.onCryptoAlgorithmChange = function () {
+        var buffer = this.bytes(this.source);
         console.log(buffer);
-        let encryptedKey;
-        let alg;
-        let format;
+        var encryptedKey;
+        var alg;
+        var format;
         if (this.cryptoAlgorithm == 'AES-GCM') {
             encryptedKey = this.bytes(this.key);
             console.log(encryptedKey.length);
@@ -150,85 +155,42 @@ let CryptoComponent = class CryptoComponent {
             alg = { name: "rsa-oaep", hash: { name: "sha-256" } };
             format = 'jwk';
         }
-    }
-    onDigestAlgorithmChange() {
-        let buffer = this.bytes(this.source);
-        this.cryptoService.digest(this.digestAlgorithm, buffer).then((result) => {
-            this.result = this.hex(result);
+    };
+    CryptoComponent.prototype.onDigestAlgorithmChange = function () {
+        var _this = this;
+        var buffer = this.bytes(this.source);
+        this.cryptoService.digest(this.digestAlgorithm, buffer).then(function (result) {
+            _this.result = _this.hex(result);
         });
-    }
-    hex2bytes(arr) {
-        return new Uint8Array(arr.split(/(.{2})/g).filter((v) => { return v.length > 0; }).map(function (v) { return parseInt(v, 16); }));
-    }
-    bytes(string) {
+    };
+    CryptoComponent.prototype.hex2bytes = function (arr) {
+        return new Uint8Array(arr.split(/(.{2})/g).filter(function (v) { return v.length > 0; }).map(function (v) { return parseInt(v, 16); }));
+    };
+    CryptoComponent.prototype.bytes = function (string) {
         return new Uint8Array(encodeURIComponent(string).split('%').filter(function (v, i, arr) { return v.length > 0; }).map(function (v) { return parseInt(v, 16); }));
-    }
-    string(bytes) {
+    };
+    CryptoComponent.prototype.string = function (bytes) {
         return decodeURIComponent(bytes.replace(/(.{2})/g, '%$1'));
-    }
-    hex(buffer) {
-        let hexCodes = [];
-        let view = new DataView(buffer);
-        for (let i = 0; i < view.byteLength; i++) {
-            let value = view.getUint8(i);
-            let stringValue = value < 15 ? '0' + value.toString(16) : value.toString(16);
+    };
+    CryptoComponent.prototype.hex = function (buffer) {
+        var hexCodes = [];
+        var view = new DataView(buffer);
+        for (var i = 0; i < view.byteLength; i++) {
+            var value = view.getUint8(i);
+            var stringValue = value < 15 ? '0' + value.toString(16) : value.toString(16);
             hexCodes.push(stringValue);
         }
         return hexCodes.join("");
-    }
-};
-CryptoComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
-        selector: 'crypto',
-        template: `
-    <article>
-      <header>
-        摘要
-      </header>
-      <input type="text" [(ngModel)]="source">
-      <textarea [(ngModel)]="result"></textarea>
-      <textarea [(ngModel)]="decryptHex"></textarea>
-      <div>{{decryptText}}</div>
-    <div class="select">
-      <label for="digest">算法</label>
-      <select id="digest" [(ngModel)]="digestAlgorithm" (change)="onDigestAlgorithmChange()">
-        <option>请选择</option>
-        <option value="SHA-1">SHA-1</option>
-        <option value="SHA-256">SHA-256</option>
-        <option value="SHA-384">SHA-384</option>
-        <option value="SHA-512">SHA-512</option>
-      </select>
-      
-    </div>
-    </article>
-    <hr/>
-    <article>
-      <header>
-        加解密
-      </header>
-      <button (click)="onCreateUserKeyClick()">创建秘钥</button>
-      <input type="text" [(ngModel)]="key"/>
-      <div>publicKey:{{publicKey|json}}</div>
-      <div>privateKey:{{privateKey|json}}</div>
-    <div class="select">
-      <label for="crypto">算法</label>
-      <select id="crypto" [(ngModel)]="cryptoAlgorithm" (change)="onCryptoAlgorithmChange()">
-        <optgroup label="对称">
-          <option value="AES-CTR">AES-CTR</option>
-          <option value="AES-CBC">AES/CBC/PKCS7Padding,Java需要BouncyCastleProvider(bcprov-jdk16)</option>
-          <option value="AES-GCM">AES-GCM</option>
-        </optgroup>
-        <optgroup label="非对称">
-          <option value="RSA-OAEP">AES-OAEP</option>
-        </optgroup>
-      </select>
-      <button (click)="onDecryptClick()">解密</button>
-    </div>
-    </article>
-  `
-    }),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__crypto_service__["a" /* CryptoService */]])
-], CryptoComponent);
+    };
+    CryptoComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
+            selector: 'webrtc',
+            template: "\n    <article>\n      <header>\n        \u6458\u8981\n      </header>\n      <input type=\"text\" [(ngModel)]=\"source\">\n      <textarea [(ngModel)]=\"result\"></textarea>\n      <textarea [(ngModel)]=\"decryptHex\"></textarea>\n      <div>{{decryptText}}</div>\n    <div class=\"select\">\n      <label for=\"digest\">\u7B97\u6CD5</label>\n      <select id=\"digest\" [(ngModel)]=\"digestAlgorithm\" (change)=\"onDigestAlgorithmChange()\">\n        <option>\u8BF7\u9009\u62E9</option>\n        <option value=\"SHA-1\">SHA-1</option>\n        <option value=\"SHA-256\">SHA-256</option>\n        <option value=\"SHA-384\">SHA-384</option>\n        <option value=\"SHA-512\">SHA-512</option>\n      </select>\n      \n    </div>\n    </article>\n    <hr/>\n    <article>\n      <header>\n        \u52A0\u89E3\u5BC6\n      </header>\n      <button (click)=\"onCreateUserKeyClick()\">\u521B\u5EFA\u79D8\u94A5</button>\n      <input type=\"text\" [(ngModel)]=\"key\"/>\n      <div>publicKey:{{publicKey|json}}</div>\n      <div>privateKey:{{privateKey|json}}</div>\n    <div class=\"select\">\n      <label for=\"crypto\">\u7B97\u6CD5</label>\n      <select id=\"crypto\" [(ngModel)]=\"cryptoAlgorithm\" (change)=\"onCryptoAlgorithmChange()\">\n        <optgroup label=\"\u5BF9\u79F0\">\n          <option value=\"AES-CTR\">AES-CTR</option>\n          <option value=\"AES-CBC\">AES/CBC/PKCS7Padding,Java\u9700\u8981BouncyCastleProvider(bcprov-jdk16)</option>\n          <option value=\"AES-GCM\">AES-GCM</option>\n        </optgroup>\n        <optgroup label=\"\u975E\u5BF9\u79F0\">\n          <option value=\"RSA-OAEP\">AES-OAEP</option>\n        </optgroup>\n      </select>\n      <button (click)=\"onDecryptClick()\">\u89E3\u5BC6</button>\n    </div>\n    </article>\n  "
+        }),
+        __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__crypto_service__["a" /* CryptoService */]])
+    ], CryptoComponent);
+    return CryptoComponent;
+}());
 
 
 
@@ -239,8 +201,8 @@ CryptoComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(9);
 
 
 /**
@@ -385,155 +347,13 @@ CryptoComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
  AES/PCBC/PKCS5Padding         32                          16
  AES/PCBC/ISO10126Padding      32                          16
  */
-let CryptoService = class CryptoService {
-    /**
-     * https://www.w3.org/TR/WebCryptoAPI/
-     *
-     *Algorithm name	encrypt	decrypt	sign	verify	digest	generateKey	deriveKey	deriveBits	importKey	exportKey	wrapKey	unwrapKey
-     *RSASSA-PKCS1-v1_5	({ kty: "RSA",  alg: "RS1" },{ name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-1" } })		✔	✔		✔			✔	✔
-     *RSA-PSS			✔	✔		✔			✔	✔
-     *RSA-OAEP	✔	✔				✔			✔	✔	✔	✔
-     *ECDSA			✔	✔		✔			✔	✔
-     *ECDH						✔	✔	✔	✔	✔
-     *AES-CTR	✔	✔				✔			✔	✔	✔	✔
-     *AES-CBC	✔	✔				✔			✔	✔	✔	✔
-     *AES-GCM	✔	✔				✔			✔	✔	✔	✔
-     *AES-KW						✔			✔	✔	✔	✔
-     *HMAC			✔	✔		✔			✔	✔
-     *SHA-1					✔
-     *SHA-256					✔
-     *SHA-384					✔
-     *SHA-512					✔
-     *HKDF							✔	✔	✔
-     *PBKDF2							✔	✔	✔
-     *"encrypt", "decrypt", "sign", "verify", "deriveKey", "deriveBits", "wrapKey" and "unwrapKey".
-     * { kty: "RSA",  alg: "RS1" }
-     { name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-1" }}
-    
-     { kty: "RSA",  alg: "RS256" }
-     { name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-256" }}
-    
-     { kty: "RSA",  alg: "RS384" }
-     { name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-384" }}
-    
-     { kty: "RSA",  alg: "RS512" }
-     { name: "RSASSA-PKCS1-v1_5",  hash: { name: "SHA-512" }}
-    
-     { kty: "RSA",  alg: "PS256" }
-     { name: "RSA-PSS",  hash: { name: "SHA-256" }}
-    
-     { kty: "RSA",  alg: "PS384" }
-     { name: "RSA-PSS",  hash: { name: "SHA-384" }}
-    
-     { kty: "RSA",  alg: "PS512" }
-     { name: "RSA-PSS",  hash: { name: "SHA-512" }}
-    
-     { kty: "RSA",  alg: "RSA-OAEP" }
-     { name: "RSA-OAEP",  hash: { name: "SHA-1" }}
-    
-     { kty: "RSA",  alg: "RSA-OAEP-256" }
-     { name: "RSA-OAEP",  hash: { name: "SHA-256" }}
-    
-     { kty: "RSA",  alg: "RSA-OAEP-384" }
-     { name: "RSA-OAEP",  hash: { name: "SHA-384" }}
-    
-     { kty: "RSA",  alg: "RSA-OAEP-512" }
-     { name: "RSA-OAEP",  hash: { name: "SHA-512" }}
-    
-     { kty: "EC",  alg: "ES256" }
-     { name: "ECDSA",  namedCurve: "P-256"  hash: { name: "SHA-256" }}
-    
-     { kty: "EC",  alg: "ES384" }
-     { name: "ECDSA",  namedCurve: "P-384"  hash: { name: "SHA-384" }}
-    
-     { kty: "EC",  alg: "ES512" }
-    
-     { name: "ECDSA",  namedCurve: "P-521"  hash: { name: "SHA-512" }}
-    
-     { kty: "oct",  alg: "A128CTR" }
-     { name: "AES-CTR",  length: 128 }
-    
-     { kty: "oct",  alg: "A192CTR" }
-     { name: "AES-CTR",  length: 192 }
-    
-    
-     { kty: "oct",  alg: "A256CTR" }
-     { name: "AES-CTR",  length: 256 }
-    
-     { kty: "oct",  alg: "A128CBC" }
-     { name: "AES-CBC",  length: 128 }
-    
-     { kty: "oct",  alg: "A192CBC" }
-     { name: "AES-CBC",  length: 192 }
-    
-     { kty: "oct",  alg: "A256CBC" }
-     { name: "AES-CBC",  length: 256 }
-    
-     { kty: "oct",  alg: "A128KW" }
-    
-     { name: "AES-KW",  length: 128 }
-    
-     { kty: "oct",  alg: "A192KW" }
-     { name: "AES-KW",  length: 192 }
-    
-     { kty: "oct",  alg: "A256KW" }
-     { name: "AES-KW",  length: 256 }
-    
-     { kty: "oct",  alg: "A128GCM" }
-     { name: "AES-GCM",  length: 128 }
-    
-     { kty: "oct",  alg: "A192GCM" }
-     { name: "AES-GCM",  length: 192 }
-    
-     { kty: "oct",  alg: "A256GCM" }
-     { name: "AES-GCM",  length: 256 }
-    
-     { kty: "oct",  alg: "A128GCMKW" }
-     { name: "AES-GCM",  length: 128 }
-    
-     { kty: "oct",  alg: "A192GCMKW" }
-     { name: "AES-GCM",  length: 192 }
-    
-     { kty: "oct",  alg: "A256GCMKW" }
-     { name: "AES-GCM",  length: 256 }
-    
-     { kty: "oct",  alg: "HS1" }
-     { name: "HMAC",  hash: { name: "SHA-1" }}
-    
-     { kty: "oct",  alg: "HS256" }
-     { name: "HMAC",  hash: { name: "SHA-256" }}
-    
-     { kty: "oct",  alg: "HS384" }
-     { name: "HMAC",  hash: { name: "SHA-384" }}
-    
-     { kty: "oct",  alg: "HS512" }
-     { name: "HMAC",  hash: "SHA-512" }
-     AES加密模式和填充方式
-    
-     算法/模式/填充                16字节加密后数据长度        不满16字节加密后长度
-     AES/CBC/NoPadding             16                          不支持
-     AES/CBC/PKCS5Padding          32                          16
-     AES/CBC/PKCS7Padding  (bcprov-jdk16 支持)        32                          16
-     AES/CBC/ISO10126Padding       32                          16
-     AES/CFB/NoPadding             16                          原始数据长度
-     AES/CFB/PKCS5Padding          32                          16
-     AES/CFB/ISO10126Padding       32                          16
-     AES/ECB/NoPadding             16                          不支持
-     AES/ECB/PKCS5Padding          32                          16
-     AES/ECB/ISO10126Padding       32                          16
-     AES/OFB/NoPadding             16                          原始数据长度
-     AES/OFB/PKCS5Padding          32                          16
-     AES/OFB/ISO10126Padding       32                          16
-     AES/PCBC/NoPadding            16                          不支持
-     AES/PCBC/PKCS5Padding         32                          16
-     AES/PCBC/ISO10126Padding      32                          16
-     */
-    constructor() {
+var CryptoService = (function () {
+    function CryptoService() {
         this.crypto = window.crypto;
     }
-    genRandomNumbers(array) {
+    CryptoService.prototype.genRandomNumbers = function (array) {
         return this.crypto.getRandomValues(array);
-    }
+    };
     /**
      * Parameters
   
@@ -573,9 +393,9 @@ let CryptoService = class CryptoService {
      * @param data
      * @returns {PromiseLike<ArrayBuffer>}
      */
-    encrypt(algorithm, key, data) {
+    CryptoService.prototype.encrypt = function (algorithm, key, data) {
         return this.crypto.subtle.encrypt(algorithm, key, data);
-    }
+    };
     /**
      * Parameters
   
@@ -611,9 +431,9 @@ let CryptoService = class CryptoService {
   
   
      */
-    decrypt(algorithm, key, data) {
+    CryptoService.prototype.decrypt = function (algorithm, key, data) {
         return this.crypto.subtle.decrypt(algorithm, key, data);
-    }
+    };
     /**
      * SyntaxEDIT
      var hash = crypto.subtle.digest(algo, buffer);
@@ -658,9 +478,9 @@ let CryptoService = class CryptoService {
   }); // outputs "c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2"
      * @returns {PromiseLike<ArrayBuffer>}
      */
-    digest(algo, buffer) {
+    CryptoService.prototype.digest = function (algo, buffer) {
         return this.crypto.subtle.digest(algo, buffer);
-    }
+    };
     /**
      * SyntaxEDIT
      var result = crypto.deriveKey(algo, masterKey, derivedKeyAlgo, extractable, keyUsages);
@@ -752,9 +572,9 @@ let CryptoService = class CryptoService {
      * @param extractable
      * @param keyUsages
      */
-    deriveKey(algo, masterKey, derivedKeyAlgo, extractable, keyUsages) {
+    CryptoService.prototype.deriveKey = function (algo, masterKey, derivedKeyAlgo, extractable, keyUsages) {
         return this.crypto.subtle.deriveKey(algo, masterKey, derivedKeyAlgo, extractable, keyUsages);
-    }
+    };
     /**
      * Parameters
   
@@ -777,9 +597,9 @@ let CryptoService = class CryptoService {
      * @param format
      * @param key
      */
-    exportKey(format, key) {
+    CryptoService.prototype.exportKey = function (format, key) {
         return this.crypto.subtle.exportKey(format, key);
-    }
+    };
     /**
      * Parameters
   
@@ -810,9 +630,9 @@ let CryptoService = class CryptoService {
      SyntaxError when keyUsages is empty but the unwrapped key is of type "secret" or "private".
      TypeError when trying to use an invalid format or if the keyData is not suited for that format.
      */
-    importKey(format, keyData, algo, extractable, usages) {
+    CryptoService.prototype.importKey = function (format, keyData, algo, extractable, usages) {
         return this.crypto.subtle.importKey(format, keyData, algo, extractable, usages);
-    }
+    };
     /**
      * Parameters
   
@@ -841,9 +661,9 @@ let CryptoService = class CryptoService {
      * @param keyUsages
      * @returns {PromiseLike<CryptoKeyPair|CryptoKey>}
      */
-    generateKey(algo, extractable, keyUsages) {
+    CryptoService.prototype.generateKey = function (algo, extractable, keyUsages) {
         return this.crypto.subtle.generateKey(algo, extractable, keyUsages);
-    }
+    };
     /**
      * Parameters
   
@@ -862,9 +682,9 @@ let CryptoService = class CryptoService {
      * @param key
      * @param text2sign
      */
-    sign(algo, key, text2sign) {
+    CryptoService.prototype.sign = function (algo, key, text2sign) {
         return this.crypto.subtle.sign(algo, key, text2sign);
-    }
+    };
     /**
      * Parameters
   
@@ -885,9 +705,9 @@ let CryptoService = class CryptoService {
      * @param signature
      * @param text2verify
      */
-    verify(algo, key, signature, text2verify) {
+    CryptoService.prototype.verify = function (algo, key, signature, text2verify) {
         return this.crypto.subtle.verify(algo, key, signature, text2verify);
-    }
+    };
     /**
      * Parameters
   
@@ -922,9 +742,9 @@ let CryptoService = class CryptoService {
      SyntaxError when keyUsages is empty but the unwrapped key is of type "secret" or "private".
      TypeError when trying to use an invalid format.
      */
-    unwrapKey(format, wrappedKey, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, extractable, keyUsages) {
+    CryptoService.prototype.unwrapKey = function (format, wrappedKey, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, extractable, keyUsages) {
         return this.crypto.subtle.unwrapKey(format, wrappedKey, unwrappingKey, unwrapAlgo, unwrappedKeyAlgo, extractable, keyUsages);
-    }
+    };
     /**
      * Parameters
   
@@ -947,16 +767,17 @@ let CryptoService = class CryptoService {
      NotSupported when trying to use an algorithm that is either unknown or isn't suitable for encryption or wrapping.
      TypeError when trying to use an invalid format.
      */
-    wrapKey(format, key, wrappingKey, wrapAlgo) {
+    CryptoService.prototype.wrapKey = function (format, key, wrappingKey, wrapAlgo) {
         return this.crypto.subtle.wrapKey(format, key, wrappingKey, wrapAlgo);
-    }
-    getRandomValues(arr) {
+    };
+    CryptoService.prototype.getRandomValues = function (arr) {
         return this.crypto.getRandomValues(arr);
-    }
-};
-CryptoService = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["c" /* Injectable */])()
-], CryptoService);
+    };
+    CryptoService = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["c" /* Injectable */])()
+    ], CryptoService);
+    return CryptoService;
+}());
 
 
 
@@ -967,10 +788,10 @@ CryptoService = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__crypto_routes__ = __webpack_require__(403);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__crypto_component__ = __webpack_require__(386);
@@ -984,24 +805,27 @@ CryptoService = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 
 
 console.log('`Person CURD` bundle loaded asynchronously');
-let CryptoModule = class CryptoModule {
-};
-CryptoModule.routes = __WEBPACK_IMPORTED_MODULE_5__crypto_routes__["a" /* routes */];
-CryptoModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["y" /* NgModule */])({
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_6__crypto_component__["a" /* CryptoComponent */]
-        ],
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_5__crypto_routes__["a" /* routes */]),
-        ],
-        providers: [
-            __WEBPACK_IMPORTED_MODULE_7__crypto_service__["a" /* CryptoService */]
-        ]
-    })
-], CryptoModule);
+var CryptoModule = (function () {
+    function CryptoModule() {
+    }
+    CryptoModule.routes = __WEBPACK_IMPORTED_MODULE_5__crypto_routes__["a" /* routes */];
+    CryptoModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["y" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_6__crypto_component__["a" /* CryptoComponent */]
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* CommonModule */],
+                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_5__crypto_routes__["a" /* routes */]),
+            ],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_7__crypto_service__["a" /* CryptoService */]
+            ]
+        })
+    ], CryptoModule);
+    return CryptoModule;
+}());
 
 
 
@@ -1011,13 +835,12 @@ CryptoModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return routes; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__crypto_component__ = __webpack_require__(386);
 
-const routes = [
+var routes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_0__crypto_component__["a" /* CryptoComponent */], pathMatch: 'full' },
 ];
-/* harmony export (immutable) */ __webpack_exports__["a"] = routes;
-
 
 
 /***/ }),

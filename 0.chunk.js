@@ -17,8 +17,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DetailComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(9);
 
 
 /**
@@ -27,25 +27,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * see https://github.com/gdi2290/es6-promise-loader for more info
  */
 console.log('`Detail` component loaded asynchronously');
-let DetailComponent = class DetailComponent {
-    ngOnInit() {
-        console.log('hello `Detail` component');
+var DetailComponent = (function () {
+    function DetailComponent() {
     }
-};
-DetailComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
-        selector: 'detail',
-        template: `
-    <h1>Hello from Detail</h1>
-    <span>
-      <a [routerLink]=" ['./child-detail'] ">
-        Child Detail
-      </a>
-    </span>
-    <router-outlet></router-outlet>
-  `,
-    })
-], DetailComponent);
+    DetailComponent.prototype.ngOnInit = function () {
+        console.log('hello `Detail` component');
+    };
+    DetailComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
+            selector: 'detail',
+            template: "\n    <h1>Hello from Detail</h1>\n    <span>\n      <a [routerLink]=\" ['./child-detail'] \">\n        Child Detail\n      </a>\n    </span>\n    <router-outlet></router-outlet>\n  ",
+        })
+    ], DetailComponent);
+    return DetailComponent;
+}());
 
 
 
@@ -56,10 +51,10 @@ DetailComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DetailModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__detail_routes__ = __webpack_require__(423);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__detail_component__ = __webpack_require__(396);
@@ -71,24 +66,27 @@ DetailComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 
 
 console.log('`Detail` bundle loaded asynchronously');
-let DetailModule = class DetailModule {
-};
-DetailModule.routes = __WEBPACK_IMPORTED_MODULE_5__detail_routes__["a" /* routes */];
-DetailModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["y" /* NgModule */])({
-        declarations: [
-            /**
-             * Components / Directives/ Pipes
-             */
-            __WEBPACK_IMPORTED_MODULE_6__detail_component__["a" /* DetailComponent */],
-        ],
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_5__detail_routes__["a" /* routes */]),
-        ],
-    })
-], DetailModule);
+var DetailModule = (function () {
+    function DetailModule() {
+    }
+    DetailModule.routes = __WEBPACK_IMPORTED_MODULE_5__detail_routes__["a" /* routes */];
+    DetailModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["y" /* NgModule */])({
+            declarations: [
+                /**
+                 * Components / Directives/ Pipes
+                 */
+                __WEBPACK_IMPORTED_MODULE_6__detail_component__["a" /* DetailComponent */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* CommonModule */],
+                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_5__detail_routes__["a" /* routes */]),
+            ],
+        })
+    ], DetailModule);
+    return DetailModule;
+}());
 
 
 
@@ -98,16 +96,15 @@ DetailModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return routes; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__detail_component__ = __webpack_require__(396);
 
-const routes = [
+var routes = [
     { path: '', children: [
             { path: '', component: __WEBPACK_IMPORTED_MODULE_0__detail_component__["a" /* DetailComponent */] },
             { path: 'child-detail', loadChildren: function() { return __webpack_require__.e/* import() */(8).then(__webpack_require__.bind(null, 421))  .then( function(module) { return module['ChildDetailModule']; } ); } }
         ] },
 ];
-/* harmony export (immutable) */ __webpack_exports__["a"] = routes;
-
 
 
 /***/ })

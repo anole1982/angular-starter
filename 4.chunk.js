@@ -5,34 +5,35 @@ webpackJsonpac__name_([4],{
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IndexedDBComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__indexeddb_person_service__ = __webpack_require__(389);
 
 
 
-let IndexedDBComponent = class IndexedDBComponent {
-    constructor(personService) {
+var IndexedDBComponent = (function () {
+    function IndexedDBComponent(personService) {
         this.personService = personService;
         this.count = 100;
     }
-    ngOnInit() {
+    IndexedDBComponent.prototype.ngOnInit = function () {
+        var _this = this;
         console.log('hello `Indexed DB` component');
-        this.personService.selectAll().then((persons) => {
-            this.persons = persons;
+        this.personService.selectAll().then(function (persons) {
+            _this.persons = persons;
         });
-    }
-    onSaveEvent(person) {
+    };
+    IndexedDBComponent.prototype.onSaveEvent = function (person) {
         debugger;
         this.personService.insert(person);
-    }
-    onSelectEvent(person) {
+    };
+    IndexedDBComponent.prototype.onSelectEvent = function (person) {
         this.selected = person;
-    }
-    onInsertButtonClick() {
-        let ps = [];
-        for (let i = 0; i < this.count; i++) {
-            let person = {
+    };
+    IndexedDBComponent.prototype.onInsertButtonClick = function () {
+        var ps = [];
+        for (var i = 0; i < this.count; i++) {
+            var person = {
                 id: i,
                 name: 'name' + i,
                 code: 'code' + i,
@@ -45,36 +46,26 @@ let IndexedDBComponent = class IndexedDBComponent {
             // person.brithday = new Date();
             // person.code='code'+i;
         }
-        let now = new Date().getTime();
-        this.personService.insert(ps).then(() => {
+        var now = new Date().getTime();
+        this.personService.insert(ps).then(function () {
             alert(new Date().getTime() - now);
         });
-    }
-    onCleanButtonClick() {
-        let now = new Date().getTime();
-        this.personService.clear().then(() => {
+    };
+    IndexedDBComponent.prototype.onCleanButtonClick = function () {
+        var now = new Date().getTime();
+        this.personService.clear().then(function () {
             alert(new Date().getTime() - now);
         });
-    }
-};
-IndexedDBComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
-        selector: 'indexeddb',
-        template: `
-    <h1>single page of Indexed DB </h1>
-    <person-form [person]="selected" (onsave)="onSaveEvent($event)"></person-form>
-    <hr/>
-    <person-list [persons]="persons" (onselect) = onSelectEvent($event)></person-list>
-    <div>
-      <span>自动插入条数</span>
-      <input type="number" style="width:50px" [(ngModel)]="count"/>
-      <button (click)="onInsertButtonClick()" >确定</button>
-      <button (click)="onCleanButtonClick()" >清除</button>
-    </div>
-  `,
-    }),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__indexeddb_person_service__["a" /* PersonService */]])
-], IndexedDBComponent);
+    };
+    IndexedDBComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
+            selector: 'indexeddb',
+            template: "\n    <h1>single page of Indexed DB </h1>\n    <person-form [person]=\"selected\" (onsave)=\"onSaveEvent($event)\"></person-form>\n    <hr/>\n    <person-list [persons]=\"persons\" (onselect) = onSelectEvent($event)></person-list>\n    <div>\n      <span>\u81EA\u52A8\u63D2\u5165\u6761\u6570</span>\n      <input type=\"number\" style=\"width:50px\" [(ngModel)]=\"count\"/>\n      <button (click)=\"onInsertButtonClick()\" >\u786E\u5B9A</button>\n      <button (click)=\"onCleanButtonClick()\" >\u6E05\u9664</button>\n    </div>\n  ",
+        }),
+        __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__indexeddb_person_service__["a" /* PersonService */]])
+    ], IndexedDBComponent);
+    return IndexedDBComponent;
+}());
 
 
 
@@ -85,21 +76,21 @@ IndexedDBComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PersonService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__core_dexie_service__ = __webpack_require__(180);
 
 
 
-let PersonService = class PersonService {
-    constructor(dexieService) {
+var PersonService = (function () {
+    function PersonService(dexieService) {
         this.dexieService = dexieService;
         this.table = this.dexieService.table('persons');
     }
-    selectAll() {
+    PersonService.prototype.selectAll = function () {
         return this.table.toArray();
-    }
-    insert(person) {
+    };
+    PersonService.prototype.insert = function (person) {
         // let personJSON = JSON.parse(TypedJSON.stringify(person));
         if (person instanceof Array) {
             return this.table.bulkAdd(person);
@@ -107,21 +98,22 @@ let PersonService = class PersonService {
         else {
             return this.table.add(person);
         }
-    }
-    clear() {
+    };
+    PersonService.prototype.clear = function () {
         return this.table.clear();
-    }
-    update(id, person) {
+    };
+    PersonService.prototype.update = function (id, person) {
         return this.table.update(id, person);
-    }
-    remove(id) {
+    };
+    PersonService.prototype.remove = function (id) {
         return this.table.delete(id);
-    }
-};
-PersonService = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["c" /* Injectable */])(),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__core_dexie_service__["a" /* DexieService */]])
-], PersonService);
+    };
+    PersonService = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["c" /* Injectable */])(),
+        __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__core_dexie_service__["a" /* DexieService */]])
+    ], PersonService);
+    return PersonService;
+}());
 
 
 
@@ -144,10 +136,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IndexedDBModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__indexeddb_routes__ = __webpack_require__(410);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__indexeddb_component__ = __webpack_require__(388);
@@ -165,26 +157,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 console.log('`Person CURD` bundle loaded asynchronously');
-let IndexedDBModule = class IndexedDBModule {
-};
-IndexedDBModule.routes = __WEBPACK_IMPORTED_MODULE_5__indexeddb_routes__["a" /* routes */];
-IndexedDBModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["y" /* NgModule */])({
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_6__indexeddb_component__["a" /* IndexedDBComponent */],
-            __WEBPACK_IMPORTED_MODULE_7__indexeddb_person_form_component__["a" /* PersonFormComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__indexeddb_person_list_component__["a" /* PersonListComponent */]
-        ],
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_5__indexeddb_routes__["a" /* routes */]),
-        ],
-        providers: [
-            __WEBPACK_IMPORTED_MODULE_9__indexeddb_person_service__["a" /* PersonService */]
-        ]
-    })
-], IndexedDBModule);
+var IndexedDBModule = (function () {
+    function IndexedDBModule() {
+    }
+    IndexedDBModule.routes = __WEBPACK_IMPORTED_MODULE_5__indexeddb_routes__["a" /* routes */];
+    IndexedDBModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["y" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_6__indexeddb_component__["a" /* IndexedDBComponent */],
+                __WEBPACK_IMPORTED_MODULE_7__indexeddb_person_form_component__["a" /* PersonFormComponent */],
+                __WEBPACK_IMPORTED_MODULE_8__indexeddb_person_list_component__["a" /* PersonListComponent */]
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* CommonModule */],
+                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_5__indexeddb_routes__["a" /* routes */]),
+            ],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_9__indexeddb_person_service__["a" /* PersonService */]
+            ]
+        })
+    ], IndexedDBModule);
+    return IndexedDBModule;
+}());
 
 
 
@@ -194,75 +189,114 @@ IndexedDBModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Person; });
 // import { JsonMember, JsonObject } from 'typedjson-npm';
 //
 // @JsonObject()
-class Person {
-    get id() {
-        return this._id;
+var Person = (function () {
+    function Person() {
     }
-    // @JsonMember()
-    set id(value) {
-        this._id = value;
-    }
-    get code() {
-        return this._code;
-    }
-    // @JsonMember()
-    set code(value) {
-        this._code = value;
-    }
-    get name() {
-        return this._name;
-    }
-    // @JsonMember()
-    set name(value) {
-        this._name = value;
-    }
-    get photo() {
-        return this._photo;
-    }
-    // @JsonMember()
-    set photo(value) {
-        this._photo = value;
-    }
-    get weight() {
-        return this._weight;
-    }
-    // @JsonMember
-    set weight(value) {
-        this._weight = value;
-    }
-    get brithday() {
-        return this._brithday;
-    }
-    // @JsonMember()
-    set brithday(value) {
-        this._brithday = value;
-    }
-    get resume() {
-        return this._resume;
-    }
-    // @JsonMember()
-    set resume(value) {
-        this._resume = value;
-    }
-    get video() {
-        return this._video;
-    }
-    // @JsonMember()
-    set video(value) {
-        this._video = value;
-    }
-    get audio() {
-        return this._audio;
-    }
-    // @JsonMember()
-    set audio(value) {
-        this._audio = value;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Person;
+    Object.defineProperty(Person.prototype, "id", {
+        get: function () {
+            return this._id;
+        },
+        // @JsonMember()
+        set: function (value) {
+            this._id = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Person.prototype, "code", {
+        get: function () {
+            return this._code;
+        },
+        // @JsonMember()
+        set: function (value) {
+            this._code = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Person.prototype, "name", {
+        get: function () {
+            return this._name;
+        },
+        // @JsonMember()
+        set: function (value) {
+            this._name = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Person.prototype, "photo", {
+        get: function () {
+            return this._photo;
+        },
+        // @JsonMember()
+        set: function (value) {
+            this._photo = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Person.prototype, "weight", {
+        get: function () {
+            return this._weight;
+        },
+        // @JsonMember
+        set: function (value) {
+            this._weight = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Person.prototype, "brithday", {
+        get: function () {
+            return this._brithday;
+        },
+        // @JsonMember()
+        set: function (value) {
+            this._brithday = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Person.prototype, "resume", {
+        get: function () {
+            return this._resume;
+        },
+        // @JsonMember()
+        set: function (value) {
+            this._resume = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Person.prototype, "video", {
+        get: function () {
+            return this._video;
+        },
+        // @JsonMember()
+        set: function (value) {
+            this._video = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Person.prototype, "audio", {
+        get: function () {
+            return this._audio;
+        },
+        // @JsonMember()
+        set: function (value) {
+            this._audio = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Person;
+}());
 
 
 
@@ -273,77 +307,40 @@ class Person {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PersonFormComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__indexeddb_person_entity__ = __webpack_require__(407);
 
 
 console.log('`indexeddb` component loaded asynchronously');
 
-let PersonFormComponent = class PersonFormComponent {
-    constructor() {
+var PersonFormComponent = (function () {
+    function PersonFormComponent() {
         this.person = new __WEBPACK_IMPORTED_MODULE_2__indexeddb_person_entity__["a" /* Person */]();
         this.onsave = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* EventEmitter */]();
     }
-    ngOnInit() {
+    PersonFormComponent.prototype.ngOnInit = function () {
         console.log('hello `Indexed DB Form` component');
-    }
-    onSaveButtonClick() {
+    };
+    PersonFormComponent.prototype.onSaveButtonClick = function () {
         this.onsave.emit(this.person);
-    }
-};
-__WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])('person'),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:type", __WEBPACK_IMPORTED_MODULE_2__indexeddb_person_entity__["a" /* Person */])
-], PersonFormComponent.prototype, "editPerson", void 0);
-__WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_3" /* Output */])('onsave'),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:type", Object)
-], PersonFormComponent.prototype, "onsave", void 0);
-PersonFormComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
-        selector: 'person-form',
-        template: `
-    <form>
-      <p>
-        <span>编码</span>
-        <input name="code" [(ngModel)]="person.code" type="text"/>
-      </p>
-      <p>
-        <span>姓名</span>
-        <input name="name" [(ngModel)]="person.name" type="text"/>
-      </p>
-      <p>
-        <span>体重</span>
-        <input name="weight" [(ngModel)]="person.weight" type="number"/>
-      </p>
-      <p>
-        <span>生日</span>
-        <input name="brithday" [(ngModel)]="person.brithday" type="date"/>
-      </p>
-      <p>
-        <span>简历</span>
-        <input name="resume" [(ngModel)]="person.resume" type="file"/>
-      </p>
-      <p>
-        <span>照片</span>
-        <input name="photo" [(ngModel)]="person.photo" type="file" accept="image/*" capture="camera"/>
-      </p>
-      <p>
-        <span>视频</span>
-        <input name="audio" [(ngModel)]="person.audio" type="file" accept="video/*" capture="camcorder"/>
-      </p>
-      <p>
-        <span>录音</span>
-        <input name="audio" [(ngModel)]="person.audio" type="file" accept="audio/*" capture="microphone"/>
-      </p>
-      <p>
-        <button type="submit" (click)="onSaveButtonClick()">保存</button>
-      </p>
-    </form>
-  `
-    })
-], PersonFormComponent);
+    };
+    __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])('person'),
+        __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:type", __WEBPACK_IMPORTED_MODULE_2__indexeddb_person_entity__["a" /* Person */])
+    ], PersonFormComponent.prototype, "editPerson", void 0);
+    __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_3" /* Output */])('onsave'),
+        __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:type", Object)
+    ], PersonFormComponent.prototype, "onsave", void 0);
+    PersonFormComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
+            selector: 'person-form',
+            template: "\n    <form>\n      <p>\n        <span>\u7F16\u7801</span>\n        <input name=\"code\" [(ngModel)]=\"person.code\" type=\"text\"/>\n      </p>\n      <p>\n        <span>\u59D3\u540D</span>\n        <input name=\"name\" [(ngModel)]=\"person.name\" type=\"text\"/>\n      </p>\n      <p>\n        <span>\u4F53\u91CD</span>\n        <input name=\"weight\" [(ngModel)]=\"person.weight\" type=\"number\"/>\n      </p>\n      <p>\n        <span>\u751F\u65E5</span>\n        <input name=\"brithday\" [(ngModel)]=\"person.brithday\" type=\"date\"/>\n      </p>\n      <p>\n        <span>\u7B80\u5386</span>\n        <input name=\"resume\" [(ngModel)]=\"person.resume\" type=\"file\"/>\n      </p>\n      <p>\n        <span>\u7167\u7247</span>\n        <input name=\"photo\" [(ngModel)]=\"person.photo\" type=\"file\" accept=\"image/*\" capture=\"camera\"/>\n      </p>\n      <p>\n        <span>\u89C6\u9891</span>\n        <input name=\"audio\" [(ngModel)]=\"person.audio\" type=\"file\" accept=\"video/*\" capture=\"camcorder\"/>\n      </p>\n      <p>\n        <span>\u5F55\u97F3</span>\n        <input name=\"audio\" [(ngModel)]=\"person.audio\" type=\"file\" accept=\"audio/*\" capture=\"microphone\"/>\n      </p>\n      <p>\n        <button type=\"submit\" (click)=\"onSaveButtonClick()\">\u4FDD\u5B58</button>\n      </p>\n    </form>\n  "
+        })
+    ], PersonFormComponent);
+    return PersonFormComponent;
+}());
 
 
 
@@ -354,47 +351,37 @@ PersonFormComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */](
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PersonListComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(9);
 
 
 console.log('`indexeddb` component loaded asynchronously');
-let PersonListComponent = class PersonListComponent {
-    constructor() {
+var PersonListComponent = (function () {
+    function PersonListComponent() {
         this.onselect = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* EventEmitter */]();
     }
-    ngOnInit() {
+    PersonListComponent.prototype.ngOnInit = function () {
         console.log('hello `Indexed DB Form` component');
-    }
-    onPersonSelected(person) {
+    };
+    PersonListComponent.prototype.onPersonSelected = function (person) {
         this.onselect.emit(person);
-    }
-};
-__WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])('persons'),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:type", Array)
-], PersonListComponent.prototype, "persons", void 0);
-__WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_3" /* Output */])('onselect'),
-    __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:type", Object)
-], PersonListComponent.prototype, "onselect", void 0);
-PersonListComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
-        selector: 'person-list',
-        template: `
-    <table>
-      <tr *ngFor="let person of persons" (click)="onPersonSelected(person)">
-        <td>{{person.id}}</td>
-        <td>{{person.code}}</td>
-        <td>{{person.name}}</td>
-        <td>{{person.weight}}</td>
-        <td>{{person.brithday}}</td>
-        <td>{{person.photo}}</td>
-      </tr>
-    </table>
-  `,
-    })
-], PersonListComponent);
+    };
+    __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["N" /* Input */])('persons'),
+        __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:type", Array)
+    ], PersonListComponent.prototype, "persons", void 0);
+    __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_3" /* Output */])('onselect'),
+        __WEBPACK_IMPORTED_MODULE_0_tslib__["c" /* __metadata */]("design:type", Object)
+    ], PersonListComponent.prototype, "onselect", void 0);
+    PersonListComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
+            selector: 'person-list',
+            template: "\n    <table>\n      <tr *ngFor=\"let person of persons\" (click)=\"onPersonSelected(person)\">\n        <td>{{person.id}}</td>\n        <td>{{person.code}}</td>\n        <td>{{person.name}}</td>\n        <td>{{person.weight}}</td>\n        <td>{{person.brithday}}</td>\n        <td>{{person.photo}}</td>\n      </tr>\n    </table>\n  ",
+        })
+    ], PersonListComponent);
+    return PersonListComponent;
+}());
 
 
 
@@ -404,13 +391,12 @@ PersonListComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */](
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return routes; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__indexeddb_component__ = __webpack_require__(388);
 
-const routes = [
+var routes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_0__indexeddb_component__["a" /* IndexedDBComponent */], pathMatch: 'full' },
 ];
-/* harmony export (immutable) */ __webpack_exports__["a"] = routes;
-
 
 
 /***/ })

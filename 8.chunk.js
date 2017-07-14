@@ -5,8 +5,8 @@ webpackJsonpac__name_([8],{
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChildDetailComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(9);
 
 
 /**
@@ -15,19 +15,20 @@ webpackJsonpac__name_([8],{
  * see https://github.com/gdi2290/es6-promise-loader for more info
  */
 console.log('`ChildDetail` component loaded asynchronously');
-let ChildDetailComponent = class ChildDetailComponent {
-    ngOnInit() {
-        console.log('hello `ChildDetail` component');
+var ChildDetailComponent = (function () {
+    function ChildDetailComponent() {
     }
-};
-ChildDetailComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
-        selector: 'child-detail',
-        template: `
-    <h1>Hello from Child Detail</h1>    
-  `,
-    })
-], ChildDetailComponent);
+    ChildDetailComponent.prototype.ngOnInit = function () {
+        console.log('hello `ChildDetail` component');
+    };
+    ChildDetailComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_9" /* Component */])({
+            selector: 'child-detail',
+            template: "\n    <h1>Hello from Child Detail</h1>    \n  ",
+        })
+    ], ChildDetailComponent);
+    return ChildDetailComponent;
+}());
 
 
 
@@ -38,10 +39,10 @@ ChildDetailComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChildDetailModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__child_detail_routes__ = __webpack_require__(420);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__child_detail_component__ = __webpack_require__(395);
@@ -53,24 +54,27 @@ ChildDetailComponent = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]
 
 
 console.log('`ChildDetail` bundle loaded asynchronously');
-let ChildDetailModule = class ChildDetailModule {
-};
-ChildDetailModule.routes = __WEBPACK_IMPORTED_MODULE_5__child_detail_routes__["a" /* routes */];
-ChildDetailModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["y" /* NgModule */])({
-        declarations: [
-            /**
-             * Components / Directives/ Pipes
-             */
-            __WEBPACK_IMPORTED_MODULE_6__child_detail_component__["a" /* ChildDetailComponent */],
-        ],
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_5__child_detail_routes__["a" /* routes */]),
-        ],
-    })
-], ChildDetailModule);
+var ChildDetailModule = (function () {
+    function ChildDetailModule() {
+    }
+    ChildDetailModule.routes = __WEBPACK_IMPORTED_MODULE_5__child_detail_routes__["a" /* routes */];
+    ChildDetailModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["y" /* NgModule */])({
+            declarations: [
+                /**
+                 * Components / Directives/ Pipes
+                 */
+                __WEBPACK_IMPORTED_MODULE_6__child_detail_component__["a" /* ChildDetailComponent */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* CommonModule */],
+                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(__WEBPACK_IMPORTED_MODULE_5__child_detail_routes__["a" /* routes */]),
+            ],
+        })
+    ], ChildDetailModule);
+    return ChildDetailModule;
+}());
 
 
 
@@ -80,13 +84,12 @@ ChildDetailModule = __WEBPACK_IMPORTED_MODULE_0_tslib__["b" /* __decorate */]([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return routes; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_detail_component__ = __webpack_require__(395);
 
-const routes = [
+var routes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_0__child_detail_component__["a" /* ChildDetailComponent */], pathMatch: 'full' },
 ];
-/* harmony export (immutable) */ __webpack_exports__["a"] = routes;
-
 
 
 /***/ }),
