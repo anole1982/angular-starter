@@ -18,6 +18,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlElementsPlugin = require('./html-elements-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const AppCachePlugin = require('appcache-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
@@ -419,6 +420,15 @@ module.exports = function (options) {
        * https://github.com/szrenwei/inline-manifest-webpack-plugin
        */
       new InlineManifestWebpackPlugin(),
+
+      new AppCachePlugin({
+        cache: ['someOtherAsset.jpg'],
+        network: null,  // No network access allowed!
+        fallback: ['failwhale.jpg'],
+        settings: ['prefer-online'],
+        exclude: ['manifest.json', /.*\.txt$/],
+        output: 'manifest.appcache'
+      }),
     ],
 
     /**

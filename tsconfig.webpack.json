@@ -25,7 +25,7 @@
   },
   "exclude": [
     "node_modules",
-    "dist",
+    "www",
     "src/**/*.spec.ts",
     "src/**/*.e2e.ts"
   ],
