@@ -16,14 +16,16 @@ import { PersonService } from './indexeddb.person.service';
       <span>自动插入条数</span>
       <input type="number" style="width:50px" [(ngModel)]="count"/>
       <button (click)="onInsertButtonClick()" >确定</button>
+      <button (click)="onAddButtonClick()" >添加</button>
+      <button (click)="onUpdateButtonClick()" >更新</button>
       <button (click)="onCleanButtonClick()" >清除</button>
     </div>
   `,
 })
 export class IndexedDBComponent implements OnInit {
-  public persons: Person[];
+  public persons: Person[] =[];
   public selected: Person;
-  public count = 100 ;
+  public count = 2 ;
   constructor(private personService: PersonService) {
   }
   public ngOnInit() {
@@ -32,11 +34,16 @@ export class IndexedDBComponent implements OnInit {
       this.persons = persons;
     });
   }
+  public onUpdateButtonClick(){
+	this.persons[0].code = "23425235";
+  }
   public onSaveEvent(person) {
     debugger;
     this.personService.insert(person);
   }
-
+  public onAddButtonClick(){
+    this.persons.push(new Person())
+  }
   public onSelectEvent(person) {
     this.selected = person;
   }
@@ -60,6 +67,10 @@ export class IndexedDBComponent implements OnInit {
     let now = new Date().getTime();
     this.personService.insert(ps).then(()=>{
       alert(new Date().getTime() - now);
+    });
+    console.log('hello `Indexed DB` component');
+    this.personService.selectAll().then((persons: Person[]) => {
+      this.persons = persons;
     });
   }
   public onCleanButtonClick(){
